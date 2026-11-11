@@ -1,7 +1,7 @@
 name: Deploy public DCIM demo
 on:
   push:
-    branches: [main]
+    branches: [demo]
   workflow_dispatch:
 permissions:
   contents: read
@@ -10,6 +10,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build:
+    if: github.ref == 'refs/heads/demo'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

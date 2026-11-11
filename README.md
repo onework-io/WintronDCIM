@@ -36,7 +36,7 @@ npm test
 
 https://onework-io.github.io/WintronDCIM/
 
-GitHub Actions 在 `main` 更新後執行測試、建置並自動發布 GitHub Pages。
+GitHub Actions 僅在 `demo` 分支更新後執行測試、建置並自動發布 GitHub Pages。
 公開版以 SQL.js 在瀏覽器執行相同的資料驗證與操作流程，使用獨立的展示種子資料。
 每個瀏覽器分頁有獨立操作紀錄，儲存在該瀏覽器的 IndexedDB；重新整理可保留，新的分頁會建立新的展示。
 不需要啟動本地 API，不會連線到現場設備，也不會上傳訪客操作資料至共用資料庫。
@@ -50,3 +50,5 @@ npx vite preview --mode pages --host 127.0.0.1 --port 4173
 ```
 
 開啟 http://127.0.0.1:4173/WintronDCIM/ 。需使用可用 IndexedDB、WebAssembly、WebGL 的現代瀏覽器。
+
+展示發布流程：在 `main` 開發並驗證後，將變更合併至 `demo` 並推送。只有 `demo` 可以觸發展示部署；手動執行工作流程亦限 `demo`。

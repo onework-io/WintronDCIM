@@ -148,3 +148,5 @@ PUE 定義參考：[The Green Grid — Power Usage Effectiveness](https://www.th
 - 分頁重新整理保留資料，新分頁使用新種子資料。瀏覽器拒絕儲存或空間不足時顯示錯誤。
 - 模型、Draco 解碼器、品牌圖與 CCTV 皆套用 Vite base。巡檢照片透過 fetch/Blob 顯示與下載，支援本地及公開模式。
 - `tests/browser-store.test.mjs` 驗證 SQLite 匯出回讀、交易回滾、獨立種子資料、工單／RFI 路由及雜湊一致性。
+
+- 公開發布分支為 `demo`，工作流程的 push 與手動執行均限定此分支；`main` 維持開發用途。
