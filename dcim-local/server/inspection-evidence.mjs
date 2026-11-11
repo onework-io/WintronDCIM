@@ -1,3 +1,4 @@
+import {Buffer} from 'buffer';
 export function validateEvidence(body){
  const name=String(body.name||'').split(/[\\/]/).pop().replace(/[\x00-\x1f\x7f]/g,'').trim();
  const note=String(body.note||'').trim();

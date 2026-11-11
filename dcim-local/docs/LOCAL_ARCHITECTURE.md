@@ -138,3 +138,13 @@ PUE 定義參考：[The Green Grid — Power Usage Effectiveness](https://www.th
 - 查詢不執行寫入；決策操作仍沿用事件及條件檢查。完成期限逾期依台北日期判斷，與 SLA 計時分開。
 - 分頁 sessionStorage 保留最近 40 組問答，支援 TXT 匯出與新對話。
 - Word 錄影腳本 v1.1 增加運維查詢分鏡，23 頁、約 29 分鐘。
+
+### 2026-11-12 GitHub Pages 公開展示
+- GitHub Actions：`.github/workflows/pages.yml`，Node 24、npm ci、測試、Pages 建置及部署。
+- `src/entry.mjs` 依 build mode 決定是否啟動瀏覽器 runtime；本地模式仍呼叫 Node API。
+- `server/store-core.mjs` 共用資料模型與交易驗證，`server/store.mjs` 僅包裝 Node SQLite。
+- `server/api.mjs` 共用所有 API 路由；Node 保留 localhost 與來源檢查，公開版 API 在分頁內執行。
+- `browser/runtime.mjs` 使用 SQL.js/WASM 與 IndexedDB，以 sessionStorage UUID 隔離每個分頁的模擬資料。沒有共用公開寫入後端。
+- 分頁重新整理保留資料，新分頁使用新種子資料。瀏覽器拒絕儲存或空間不足時顯示錯誤。
+- 模型、Draco 解碼器、品牌圖與 CCTV 皆套用 Vite base。巡檢照片透過 fetch/Blob 顯示與下載，支援本地及公開模式。
+- `tests/browser-store.test.mjs` 驗證 SQLite 匯出回讀、交易回滾、獨立種子資料、工單／RFI 路由及雜湊一致性。

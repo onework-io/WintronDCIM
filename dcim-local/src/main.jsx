@@ -1,3 +1,4 @@
+import {assetUrl} from './public-assets.mjs';
 import {BrainCircuit,PackageCheck,History,GitBranch,ChartNoAxesCombined,ClipboardList,ClipboardCheck,Inbox,Building2} from 'lucide-react';
 import {PreferencesProvider,usePreferences,Appearance} from './Preferences';
 import SecurityLogs from './SecurityLogs';
@@ -30,7 +31,7 @@ import './admin-theme.css';
 const nav=[['overview','機房總覽',LayoutDashboard],['alerts','告警總覽',Bell],['monitor','系統監測',Activity],['energy','能耗管理',Zap],['rfi','GenAI 決策',BrainCircuit],['racks','機櫃配置',Server],['environment','環境監測',Droplets],['assets','資產管理',Database],['lifecycle','資產生命週期',PackageCheck],['assetHistory','資產維護履歷',History],['topology','電力與網路拓樸',Network],['network','服務關聯',GitBranch],['reports','報表分析',FileChartColumn],['history','能源歷史與月報',ChartNoAxesCombined],['alertHistory','告警處置與歷程',ClipboardList],['workorders','工單管理',CheckCheck],['capacity','容量規劃',Grid2X2],['inspections','資產巡檢',ClipboardCheck],['notifications','站內通知',Inbox],['departments','組織與部門',Building2],['users','使用者管理',Users],['security','資安日誌',Shield],['appearance','介面設定',Settings2]];
 const systemNames={power:'電力',ups:'UPS',pdu:'PDU',cooling:'空調',fire:'消防',network:'網通',access:'門禁',environment:'環境'};
 const severityNames={critical:'嚴重',warning:'警告',info:'提示'};
-const cameraList=[{id:'CAM-01',name:'A 區機櫃',src:'/cctv/zone-a.png'},{id:'CAM-02',name:'B 區機櫃',src:'/cctv/zone-b.png'},{id:'CAM-03',name:'機房走道',src:'/cctv/aisle.jpg'},{id:'CAM-04',name:'機房總覽',src:'/cctv/overview.png'}];
+const cameraList=[{id:'CAM-01',name:'A 區機櫃',src:assetUrl('/cctv/zone-a.png')},{id:'CAM-02',name:'B 區機櫃',src:assetUrl('/cctv/zone-b.png')},{id:'CAM-03',name:'機房走道',src:assetUrl('/cctv/aisle.jpg')},{id:'CAM-04',name:'機房總覽',src:assetUrl('/cctv/overview.png')}];
 const clockFmt=new Intl.DateTimeFormat('zh-TW',{timeZone:'Asia/Taipei',hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
 const stamp=t=>new Intl.DateTimeFormat('zh-TW',{timeZone:'Asia/Taipei',month:'2-digit',day:'2-digit',hour12:false,hour:'2-digit',minute:'2-digit'}).format(new Date(t));
 const history=Array.from({length:24},(_,i)=>({hour:i,kw:Math.round(210+Math.sin(i*.44)*19+(i>7&&i<19?25:0)),alerts:[0,0,1,0,0,0,1,2,3,1,2,4,2,1,0,1,2,1,0,1,0,0,0,0][i]}));

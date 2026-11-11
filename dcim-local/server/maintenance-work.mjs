@@ -1,4 +1,4 @@
-import {createHash,randomUUID} from 'node:crypto';
+import {createHash,randomUUID} from '../shared/identity.mjs';
 import {validateWindow,windowConflicts} from '../shared/maintenance-window.mjs';
 import {maintenanceImpact} from '../shared/maintenance-impact.mjs';
 export function maintenanceWorkMethods({list,put,transaction,audit}){return {createMaintenanceWork(input){return transaction(()=>{

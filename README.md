@@ -31,3 +31,22 @@ npm test
 詳細功能與架構請見 [應用說明](dcim-local/README.md) 與 [架構文件](dcim-local/docs/LOCAL_ARCHITECTURE.md)。
 
 原始參考影片、錄製影片、快取、建置產物、本地資料庫與環境設定不包含在此儲存庫。
+
+## 公開展示
+
+https://onework-io.github.io/WintronDCIM/
+
+GitHub Actions 在 `main` 更新後執行測試、建置並自動發布 GitHub Pages。
+公開版以 SQL.js 在瀏覽器執行相同的資料驗證與操作流程，使用獨立的展示種子資料。
+每個瀏覽器分頁有獨立操作紀錄，儲存在該瀏覽器的 IndexedDB；重新整理可保留，新的分頁會建立新的展示。
+不需要啟動本地 API，不會連線到現場設備，也不會上傳訪客操作資料至共用資料庫。
+
+本地驗證公開版：
+
+```sh
+cd dcim-local
+npm run build:pages
+npx vite preview --mode pages --host 127.0.0.1 --port 4173
+```
+
+開啟 http://127.0.0.1:4173/WintronDCIM/ 。需使用可用 IndexedDB、WebAssembly、WebGL 的現代瀏覽器。

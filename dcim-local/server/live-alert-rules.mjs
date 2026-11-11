@@ -1,5 +1,5 @@
 import {ruleConfigChanges} from '../shared/alert-rule-config.mjs';
-import {randomUUID} from 'node:crypto';
+import {randomUUID} from '../shared/identity.mjs';
 import {defaultAlertRule,validateAlertRule,evaluateAlertRule} from '../shared/alert-rules.mjs';
 export function liveAlertMethods({list,put,transaction,audit}){
  const config=()=>list('alertRuleConfig')[0]||{id:'temperature',revision:0,enabled:true,rackId:'4F-B-07',rule:{...defaultAlertRule}};
