@@ -1,0 +1,20 @@
+[
+  {
+    "zone": "A",
+    "racks": 11,
+    "busways": 2,
+    "tap_off_boxes": 22,
+    "power_downfeeds": 22,
+    "data_downfeeds": 44,
+    "mesh_batches": 7
+  },
+  {
+    "zone": "B",
+    "racks": 22,
+    "busways": 2,
+    "tap_off_boxes": 44,
+    "power_downfeeds": 44,
+    "data_downfeeds": 88,
+    "mesh_batches": 7
+  }
+]

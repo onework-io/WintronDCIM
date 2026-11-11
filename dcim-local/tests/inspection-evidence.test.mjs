@@ -1,0 +1,10 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createStore} from '../server/store.mjs';
+const data='iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII=';
+const file={name:'photo.png',mime:'image/png',note:'風扇狀態',data,actorId:'U-002'};
+test('evidence enforces owner, content, size, revision and limit without changing checklist',()=>{const s=createStore(':memory:');try{let task=s.createInspection({title:'附件測試',assetId:'AS-0001',assigneeId:'U-002'});const upload=b=>s.updateInspection(task.id,'evidence',{...file,revision:task.revision,...b});
+ assert.throws(()=>upload({actorId:'U-001'}),/指定/);assert.throws(()=>upload({data:Buffer.from('<svg></svg>').toString('base64')}),/格式/);assert.throws(()=>upload({data:'A'.repeat(2800004)}),/過大/);assert.throws(()=>upload({note:''}),/說明/);assert.throws(()=>upload({mime:'image/jpeg'}),/格式/);
+ task=upload({});assert.equal(task.attachments.length,1);assert.equal(task.items[0].result,'pending');assert.equal(s.list('inspectionEvidence')[0].data,data);assert.throws(()=>upload({revision:0}),/更新/);
+ for(let i=0;i<4;i++)task=upload({});assert.throws(()=>upload({}),/最多/);assert.equal(s.list('inspectionEvidence').length,5);
+ task=s.updateInspection(task.id,'complete',{revision:task.revision,actorId:'U-002',items:task.items.map(i=>({...i,result:'normal'}))});assert.throws(()=>upload({}),/已完成/);
+ }finally{s.db.close();}});
+test('evidence and metadata survive reopen',async()=>{const {mkdtempSync,rmSync}=await import('node:fs');const {tmpdir}=await import('node:os');const {join}=await import('node:path');const dir=mkdtempSync(join(tmpdir(),'evidence-'));let s=createStore(join(dir,'db'));try{const task=s.createInspection({title:'附件',assetId:'AS-0001',assigneeId:'U-002'});s.updateInspection(task.id,'evidence',{...file,revision:0});s.db.close();s=createStore(join(dir,'db'));assert.equal(s.list('inspections')[0].attachments.length,1);assert.equal(s.list('inspectionEvidence')[0].data,data);}finally{s.db.close();rmSync(dir,{recursive:true,force:true});}});

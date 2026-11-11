@@ -1,0 +1,12 @@
+{
+  "scenes": [
+    "4F | A11 + B22"
+  ],
+  "rack_counts": {
+    "A": 11,
+    "B": 22
+  },
+  "IT_total": 33,
+  "objects": 906,
+  "source_images_packed": 2
+}

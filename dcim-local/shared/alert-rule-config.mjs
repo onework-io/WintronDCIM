@@ -1,0 +1,3 @@
+import {validateAlertRule} from './alert-rules.mjs';
+export const ruleFieldLabels={trigger:'告警門檻 °C',recover:'復歸門檻 °C',triggerSeconds:'持續超限秒數',recoverSeconds:'持續復歸秒數',maxGapSeconds:'最大資料間隔秒數'};
+export function ruleConfigChanges(old,next){const rule=validateAlertRule(next.rule);if(typeof next.rackId!=='string'||!/^4F-(A-(0[1-9]|1[01])|B-(0[1-9]|1[0-9]|2[0-2]))$/.test(next.rackId)||typeof next.enabled!=='boolean')throw Error('規則範圍無效');return [['rackId','監測機櫃',old.rackId,next.rackId],['enabled','監測狀態',old.enabled?'啟用':'暫停',next.enabled?'啟用':'暫停'],...Object.entries(ruleFieldLabels).map(([k,label])=>[k,label,old.rule[k],rule[k]])].filter(([, ,before,after])=>before!==after).map(([key,label,before,after])=>({key,label,before,after}));}

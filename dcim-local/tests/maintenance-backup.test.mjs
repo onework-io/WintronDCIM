@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {exportPlans,previewPlans,importPlans} from '../shared/maintenance-backup.mjs';
+const racks=['4F-A-01','4F-B-07'];
+const p={id:'old',name:'維護',racks:['4F-B-07'],window:{start:'2026-11-12T22:00',end:'2026-11-13T00:30',note:'檢查'}};
+test('backup preview finds conflicts; import gives fresh identities without overwriting',()=>{const text=exportPlans([p]);const preview=previewPlans(text,[p],racks);assert.deepEqual(preview[0].conflicts,['維護']);const result=importPlans(text,[p],racks,{id:()=> 'new',at:'2026-11-11T00:00:00Z'});assert.equal(result.length,2);assert.equal(result[0].id,'new');assert.equal(result[0].window.minutes,150);assert.equal(result[1],p);assert.equal(result[0].conflicts,undefined);});
+test('invalid versions, racks, dates, capacity and duplicate IDs fail atomically',()=>{assert.throws(()=>previewPlans('{}',[],racks));assert.throws(()=>previewPlans(exportPlans([{...p,racks:['5F-A-01']}]),[],racks));assert.throws(()=>previewPlans(exportPlans([{...p,window:{start:'2026-11-13T00:30',end:'2026-11-12T22:00'}}]),[],racks));assert.throws(()=>previewPlans(exportPlans([p]),Array(20).fill(p),racks));assert.throws(()=>importPlans(exportPlans([p]),[p],racks,{id:()=> 'old'}));});

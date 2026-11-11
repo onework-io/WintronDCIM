@@ -1,0 +1,33 @@
+{
+  "file": "AIDC_4F_A11_B22_draco.glb",
+  "size_bytes": 1146024,
+  "draco_level": 6,
+  "quantization": {
+    "position": 16,
+    "normal": 10,
+    "texcoord": 12
+  },
+  "decoded_in_Blender": true,
+  "rack_counts": {
+    "A": 11,
+    "B": 22
+  },
+  "mesh_objects_after_import": 754,
+  "bounds_m_Blender_axes": [
+    [
+      -40.10000228881836,
+      18.5
+    ],
+    [
+      -33.400001525878906,
+      9.000001907348633
+    ],
+    [
+      -0.3499999940395355,
+      3.5999999046325684
+    ]
+  ],
+  "embedded_floor_texture": true,
+  "cameras_exported": true,
+  "studio_area_lights_exported": false
+}

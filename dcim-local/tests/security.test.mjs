@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {auditSecurity,filterSecurity,demoSecurity,securityCsv} from '../shared/security.mjs';
+test('audit preserves provenance without inventing actors or threats',()=>{const r=auditSecurity([{id:1,at:'2026-11-11T01:00:00Z',action:'user.updated',entity:'U-001'}])[0];assert.equal(r.source,'audit');assert.equal(r.actor,null);assert.equal(r.ip,null);assert.equal(r.severity,'warning');assert.equal(r.result,'recorded');});
+test('security filters isolate sources, categories, severity and date',()=>{const demo=demoSecurity(Date.parse('2026-11-11T01:00:00Z'));assert.equal(filterSecurity(demo,{source:'audit'}).length,0);assert.equal(filterSecurity(demo,{severity:'critical'}).length,2);assert.equal(filterSecurity(demo,{query:'192.0.2.21',category:'identity'}).length,1);assert.equal(filterSecurity(demo,{from:'2026-11-11T00:59:00Z'}).length,1);});
+test('CSV neutralizes spreadsheet formulas and escapes quoted content',()=>{const csv=securityCsv([{id:'1',action:'=CMD("x")',target:'a,b'}]);assert.ok(csv.includes('"\'=CMD(""x"")"'));assert.ok(csv.includes('"a,b"'));});

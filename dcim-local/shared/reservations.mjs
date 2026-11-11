@@ -1,0 +1,1 @@
+export function reservedAssets(reservations,excludeWorkId=''){return reservations.filter(r=>r.state==='active'&&r.workOrderId!==excludeWorkId).flatMap(r=>r.placements.map((p,i)=>({...p,id:`reserved:${r.id}:${i}`,name:r.name,type:'server',reservationId:r.id})));}
